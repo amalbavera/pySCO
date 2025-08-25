@@ -24,29 +24,29 @@ We use the [International System of Units](https://www.nist.gov/pml/owm/metric-s
 
 # Table of Contents
 
-1. [Reading Outputs from Electronic Structure Codes](#1.-reading-outputs-from-electronic-structure-codes)
-    1. [VASP](#1.1-vasp)
-    2. [Quantum Espresso](#1.2-quantum-espresso)
-    3. [Gaussian](#1.3-gaussian)
-    4. [Orca](#1.4-orca)
-    5. [NWChem](#1.5-nwchem)
-    6. [Passing additional options](#1.6-passing-additional-options)
-        1. [Magnetization per Atom](#1.6.1-magnetization-per-atom)
-        2. [Jahn-Teller Distortion](#1.6.2-jahn-teller-distortion)
-        3. [Spin-Orbit Coupling](#1.6.3-spin-orbit-coupling)
-2. [Computing Properties](#2.-computing-properties)
-    1. [Spin-Crossover Energy](#2.1-spin-crossover-energy)
-    2. [Transition Temperature](#2.2-transition-temperature)
-    3. [High-Spin Population as function of Temperature](#2.3-high-spin-population-as-function-of-temperature)
-    4. [Gibbs Free Energy as Function of Temperature](#2.4-gibbs-free-energy-as-function-of-temperature)
-    5. [Fitting the Interaction Parameter](#2.5-fitting-the-interaction-parameter)
+1. [Reading Outputs from Electronic Structure Codes](#1-reading-outputs-from-electronic-structure-codes)
+    1. [VASP](#11-vasp)
+    2. [Quantum Espresso](#12-quantum-espresso)
+    3. [Gaussian](#13-gaussian)
+    4. [Orca](#14-orca)
+    5. [NWChem](#15-nwchem)
+    6. [Passing additional options](#16-passing-additional-options)
+        1. [Magnetization per Atom](#161-magnetization-per-atom)
+        2. [Jahn-Teller Distortion](#162-jahn-teller-distortion)
+        3. [Spin-Orbit Coupling](#163-spin-orbit-coupling)
+2. [Computing Properties](#2-computing-properties)
+    1. [Spin-Crossover Energy](#21-spin-crossover-energy)
+    2. [Transition Temperature](#22-transition-temperature)
+    3. [High-Spin Population as function of Temperature](#23-high-spin-population-as-function-of-temperature)
+    4. [Gibbs Free Energy as Function of Temperature](#24-gibbs-free-energy-as-function-of-temperature)
+    5. [Fitting the Interaction Parameter](#25-fitting-the-interaction-parameter)
 
 ---
 ---
 
 # 1. Reading Outputs from Electronic Structure Codes
 
-Currently, the library is compatible with [VASP](#reading-from-vasp), [Gaussian](#reading-from-gaussian), [Orca](#reading-from-orca), and [NWChem](#reading-from-nwchem). We are working on adding compatiblity with [Quantum Espresso](#reading-from-quantum-espresso).
+Currently, the library is compatible with [VASP](#11-vasp), [Gaussian](#13-gaussian), [Orca](#14-orca), and [NWChem](#15-nwchem). We are working on adding compatiblity with [Quantum Espresso](#12-quantum-espresso).
 
 ---
 
@@ -146,7 +146,7 @@ Remember that you need to do this for each spin state. The file extension is irr
 ---
 
 ## 1.6 Passing Additional Options
-The [read](#1.-reading-outputs-from-electronic-structure-codes) module also allows for the inclusion of additional options when reading output files. These are specified as keyword arguments, namely, [magnetization](#1.6.1-magnetization-per-atom), [jahnteller](#1.6.2-jahn-teller-distortion), and [orbit](#1.6.3-spin-orbit-coupling). These keywords are not mutually exclusive and hence may be included simultaneously.
+The [read](#1-reading-outputs-from-electronic-structure-codes) module also allows for the inclusion of additional options when reading output files. These are specified as keyword arguments, namely, [magnetization](#161-magnetization-per-atom), [jahnteller](#162-jahn-teller-distortion), and [orbit](#163-spin-orbit-coupling). These keywords are not mutually exclusive and hence may be included simultaneously.
 
 ### 1.6.1 Magnetization per Atom
 
@@ -167,7 +167,7 @@ low_spin  = read.orca( "path/to/the/low/spin/state/orca/output.out",  magnetizat
 high_spin = read.orca( "path/to/the/high/spin/state/orca/output.out", magnetization=high_spin_mag )
 ```
 
-It is important to notice that the `magnetization` argument is not needed for [VASP](#1.1-vasp) because we already provide the MAGCAR. Keep in mind that pySCO will use `magnetization` instead of the MAGCAR file should it be specified.
+It is important to notice that the `magnetization` argument is not needed for [VASP](#11-vasp) because we already provide the MAGCAR. Keep in mind that pySCO will use `magnetization` instead of the MAGCAR file should it be specified.
 
 ### 1.6.2 Jahn-Teller Distortion
 
@@ -330,7 +330,7 @@ The phenomenological interaction parameter, $\Gamma$, was proposed by Slichter a
 G = (1 - n_\mathrm{HS})\,G_\mathrm{LS} + n_\mathrm{HS}\,G_\mathrm{HS} + \Gamma\,n_\mathrm{HS}\,(1 - n_\mathrm{HS}) - T\,S_\mathrm{mix}
 ```
 
-where LS and HS label the low- and high-spin state, respectively, and $`S_\mathrm{mix}`$ is the mixing entropy given by $`S_\mathrm{mix} = -k_B\,N_A\,(\; n_\mathrm{HS} \ln[n_\mathrm{HS}] + (1 - n_\mathrm{HS}) \ln[1 - n_\mathrm{HS}] \;)`$. Keep in mind that we need to sample a series of spin configurations within the interval $`0 < n_\mathrm{HS} < 1`$ to compute this interaction parameter. This set of spin configurations are passed to pySCO with the keyword `ms:list` that contains the objects generated by the [read](#1.-reading-outputs-from-electronic-structure-codes) module.
+where LS and HS label the low- and high-spin state, respectively, and $`S_\mathrm{mix}`$ is the mixing entropy given by $`S_\mathrm{mix} = -k_B\,N_A\,(\; n_\mathrm{HS} \ln[n_\mathrm{HS}] + (1 - n_\mathrm{HS}) \ln[1 - n_\mathrm{HS}] \;)`$. Keep in mind that we need to sample a series of spin configurations within the interval $`0 < n_\mathrm{HS} < 1`$ to compute this interaction parameter. This set of spin configurations are passed to pySCO with the keyword `ms:list` that contains the objects generated by the [read](#1-reading-outputs-from-electronic-structure-codes) module.
 
 - `metals: tuple(str)`. By default the contribution $`{\Delta E}_\mathrm{sco}`$ is normalized to the total number of spin conversion centers that is determined by comparing which transition metals undergo a spin transition. This list of metals defaults to `metals=('Cr', 'Mn', 'Fe', 'Co)` and can be modified by the user.
 - `centers: float`. The automatic normalization can also be overruled by means of the optional keyword `centers` that fixes the total number of spin-crossover centers.
