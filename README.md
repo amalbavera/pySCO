@@ -30,10 +30,11 @@ We use the [International System of Units](https://www.nist.gov/pml/owm/metric-s
     3. [Gaussian](#13-gaussian)
     4. [Orca](#14-orca)
     5. [NWChem](#15-nwchem)
-    6. [Passing additional options](#16-passing-additional-options)
-        1. [Magnetization per Atom](#161-magnetization-per-atom)
-        2. [Jahn-Teller Distortion](#162-jahn-teller-distortion)
-        3. [Spin-Orbit Coupling](#163-spin-orbit-coupling)
+    6. [pySCF](#16-pyscf)
+    7. [Passing additional options](#17-passing-additional-options)
+        1. [Magnetization per Atom](#171-magnetization-per-atom)
+        2. [Jahn-Teller Distortion](#172-jahn-teller-distortion)
+        3. [Spin-Orbit Coupling](#173-spin-orbit-coupling)
 2. [Computing Properties](#2-computing-properties)
     1. [Spin-Crossover Energy](#21-spin-crossover-energy)
     2. [Transition Temperature](#22-transition-temperature)
@@ -145,10 +146,30 @@ Remember that you need to do this for each spin state. The file extension is irr
 
 ---
 
-## 1.6 Passing Additional Options
-The [read](#1-reading-outputs-from-electronic-structure-codes) module also allows for the inclusion of additional options when reading output files. These are specified as keyword arguments, namely, [magnetization](#161-magnetization-per-atom), [jahnteller](#162-jahn-teller-distortion), and [orbit](#163-spin-orbit-coupling). These keywords are not mutually exclusive and hence may be included simultaneously.
+## 1.6 pySCF
+Since pySCF already runs in Python, we simply need to provide the mean-field object we created for our run, and the harmonic analysis dictionary that we obtained from the hessian matrix. For the sake of clarity, please keep in mind that the mean-field object commonly is referred to as `mf` in the pySCF documentation, whereas the harmonic analysis is available through the `thermo` module using
 
-### 1.6.1 Magnetization per Atom
+```python
+from pyscf.hessian import thermo
+
+hessian = spin_state_mean_field_object.Hessian().kernel()
+spin_state_harmonic_analysis = thermo.harmonic_analysis(spin_state_mean_field_object.mol, hessian)
+```
+Then we use those outputs from our generic example in pySCO as follows,
+
+```python
+from pysco import read
+
+low_spin  = read.pyscf( low_spin_mean_field_object, low_spin_harmonic_analysis )
+high_spin = read.pyscf( high_spin_mean_field_object, high_spin_harmonic_analysis )
+```
+
+---
+
+## 1.7 Passing Additional Options
+The [read](#1-reading-outputs-from-electronic-structure-codes) module also allows for the inclusion of additional options when reading output files. These are specified as keyword arguments, namely, [magnetization](#171-magnetization-per-atom), [jahnteller](#172-jahn-teller-distortion), and [orbit](#173-spin-orbit-coupling). These keywords are not mutually exclusive and hence may be included simultaneously.
+
+### 1.7.1 Magnetization per Atom
 
 `magnetization: list[int]`. We refer to magnetization, $\zeta$, as the difference between spin-up electrons, $`N_\uparrow`$, and spin-down electrons, $`N_\downarrow`$. Hence, $`\zeta = N_\uparrow - N_\downarrow`$. By default, pySCO will search for the multiplicity to determine the magnetization and assign it to any Cr, Mn, Fe, or Co in the structure. This choice certainly is convenient for mononuclear metal complexes, but needs to be handled properly for multicenter systems. The `magnetization` argument can therefore be used to override the default behavior and specify the desired magnetic moment for each metal center, or any other atom in particular.
 
@@ -169,7 +190,7 @@ high_spin = read.orca( "path/to/the/high/spin/state/orca/output.out", magnetizat
 
 It is important to notice that the `magnetization` argument is not needed for [VASP](#11-vasp) because we already provide the MAGCAR. Keep in mind that pySCO will use `magnetization` instead of the MAGCAR file should it be specified.
 
-### 1.6.2 Jahn-Teller Distortion
+### 1.7.2 Jahn-Teller Distortion
 
 `jahnteller: int`. By default pySCO assumes no Jahn-Teller distortions. The argument `jahnteller` may be used to specify the number of distortions in the structure. The following is an example using the Gaussian reader,
 
@@ -180,7 +201,7 @@ low_spin  = read.gaussian( "path/to/the/low/spin/state/gaussian/output.log",  ja
 high_spin = read.gaussian( "path/to/the/high/spin/state/gaussian/output.log", jahnteller=3 )
 ```
 
-### 1.6.3 Spin-Orbit Coupling
+### 1.7.3 Spin-Orbit Coupling
 
 `orbit: int`. By default pySCO assumes no spin-orbit coupling. The argument `orbit` may be used to specify the orbital angular momentum, $L$, to compute the entropic contribution $`{\Delta S}_\mathrm{orb}`$ in the form
 
