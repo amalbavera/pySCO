@@ -47,7 +47,7 @@ We use the [International System of Units](https://www.nist.gov/pml/owm/metric-s
 
 # 1. Reading Outputs from Electronic Structure Codes
 
-Currently, the library is compatible with [VASP](#11-vasp), [Gaussian](#13-gaussian), [Orca](#14-orca), and [NWChem](#15-nwchem). We are working on adding compatiblity with [Quantum Espresso](#12-quantum-espresso).
+Currently, the library is compatible with [VASP](#11-vasp), [Gaussian](#13-gaussian), [Orca](#14-orca), [NWChem](#15-nwchem), and [pySCF](#16-pyscf). We are working on adding compatiblity with [Quantum Espresso](#12-quantum-espresso).
 
 ---
 
@@ -147,7 +147,7 @@ Remember that you need to do this for each spin state. The file extension is irr
 ---
 
 ## 1.6 pySCF
-Since pySCF already runs in Python, we simply need to provide the mean-field object we created for our run, and the harmonic analysis dictionary that we obtained from the hessian matrix. For the sake of clarity, please keep in mind that the mean-field object commonly is referred to as `mf` in the pySCF documentation, whereas the harmonic analysis is available through the `thermo` module using
+Since pySCF already runs in Python, we simply need to provide the mean-field object we created for our run, and the harmonic analysis dictionary that we obtained from the hessian matrix. For the sake of clarity, please keep in mind that the mean-field object commonly is called `mf` in the pySCF documentation, whereas the harmonic analysis is available through the `thermo` module using,
 
 ```python
 from pyscf.hessian import thermo
@@ -155,7 +155,7 @@ from pyscf.hessian import thermo
 hessian = spin_state_mean_field_object.Hessian().kernel()
 spin_state_harmonic_analysis = thermo.harmonic_analysis(spin_state_mean_field_object.mol, hessian)
 ```
-Then we use those outputs from our generic example in pySCO as follows,
+Then, we pass the generic mean-field object and generic harmonic analysis to pySCO as follows,
 
 ```python
 from pysco import read
