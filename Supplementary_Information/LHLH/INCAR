@@ -1,0 +1,46 @@
+GGA = PE
+
+NBANDS = 768
+
+KSPACING = 0.2
+
+ENCUT = 600
+EDIFF = 1.E-09
+LASPH = .TRUE.
+LREAL = .FALSE.
+
+LMAXMIX = 4
+
+ALGO = All
+PREC = Accurate
+ADDGRID = .TRUE.
+
+ISMEAR = 0
+LORBIT = 11
+SIGMA = 1.E-02
+
+ISPIN = 2
+NUPDOWN = 8.0
+MAGMOM =  0.0 4.0 0.0 4.0 432*0.0
+
+LDAU = .TRUE.
+LDAUL = 2 -1 -1 -1 -1
+LDAUTYPE = 2
+LDAUPRINT = 2
+LDAUU = 2.0 0.0 0.0 0.0 0.0
+LDAUJ = 0.0 0.0 0.0 0.0 0.0
+#
+### Relaxation
+#
+ISIF = 3
+NSW = 900
+IBRION = 2
+POTIM = 0.65
+EDIFFG = -1.E-03
+#
+### Phonons
+#
+NFREE = 2
+IBRION = 5
+POTIM = 1.E-02
+
