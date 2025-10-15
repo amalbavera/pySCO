@@ -236,6 +236,7 @@ There are two optional arguments that modify the behavior of the function:
 
 - `metals: tuple(str)`. By default $`{\Delta E}_\mathrm{sco}`$ is normalized to the total number of spin conversion centers that is determined by comparing which transition metals undergo a spin transition. This list of metals defaults to `metals=('Cr', 'Mn', 'Fe', 'Co)` and can be modified by the user.
 - `centers: float`. The automatic normalization can also be overruled by means of the optional keyword `centers` that fixes the total number of spin-crossover centers.
+- `zero_point_energy: bool`. If set to `True`, the zero-point energy correction will be included  as in $`{\Delta E}_\mathrm{sco}`$. Otherwise the energy difference $`{\Delta E}_\mathrm{HL}`$ will be reported. It defaults to `zero_point_energy=False`.
 
 ```python
 from pysco import thermo
@@ -248,6 +249,9 @@ Esco = thermo.spin_crossover_energy( ls=low_spin, hs=high_spin, metals=('Fe', 'M
 
 # Specify the number of spin conversion centers
 Esco = thermo.spin_crossover_energy( ls=low_spin, hs=high_spin, centers=2.0 )
+
+# Multiple choices
+Esco = thermo.spin_crossover_energy( ls=low_spin, hs=high_spin, zero_point_energy=True )
 ```
 
 ---
