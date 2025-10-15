@@ -5,9 +5,8 @@ The pysco package provides a user friendly data structure for thermodynamic anal
 import sys
 
 from .read   import read
-from .write  import write
 from .thermo import thermo
 
-__all__ = ["read", "write", "thermo"]
+__all__ = ["read", "thermo"]
 
 sys.tracebacklimit = 0
