@@ -9,17 +9,16 @@ Please ensure that the following external libraries are installed beforehand:
 
 We use the [International System of Units](https://www.nist.gov/pml/owm/metric-si/si-units) as follows:
 
-| Property              | Symbol                    | Unit                          |
-| :-------------------: | :-----------------------: | :---------------------------: |
-| Temperature           | $T$                       | K                             |
-| Spin-Crossover Energy | ${\Delta E}_\mathrm{sco}$ | kJ mol $^{-1}$                |
-| Enthalpy Change       | $\Delta H$                | kJ mol $^{-1}$                |
-| Entropy Change        | $\Delta S$                | J mol $^{-1}$ K $^{-1}$       |
-| Gibbs Free Energy     | $G$                       | kJ mol $^{-1}$                |
-| Interaction Parameter | $\Gamma$                  | kJ mol $^{-1}$                |
-| High-Spin Population  | $n_\mathrm{HS}$           | $0 \leq n_\mathrm{HS} \leq 1$ |
+| Property              | Symbol                      | Unit                            |
+|-----------------------|-----------------------------|---------------------------------|
+| Temperature           | $`T`$                       | K                               |
+| Spin-Crossover Energy | $`{\Delta E}_\mathrm{sco}`$ | kJ mol $`^{-1}`$                |
+| Enthalpy Change       | $`\Delta H`$                | kJ mol $`^{-1}`$                |
+| Entropy Change        | $`\Delta S`$                | J mol $`^{-1}`$ K $`^{-1}`$     |
+| Gibbs Free Energy     | $`G`$                       | kJ mol $`^{-1}`$                |
+| Interaction Parameter | $`\Gamma`$                  | kJ mol $`^{-1}`$                |
+| High-Spin Population  | $`n_\mathrm{HS}`$           | $`0 \leq n_\mathrm{HS} \leq 1`$ |
 
----
 ---
 
 # Table of Contents
@@ -43,13 +42,11 @@ We use the [International System of Units](https://www.nist.gov/pml/owm/metric-s
     5. [Fitting the Interaction Parameter](#25-fitting-the-interaction-parameter)
 
 ---
----
 
 # 1. Reading Outputs from Electronic Structure Codes
 
 Currently, the library is compatible with [VASP](#11-vasp), [Gaussian](#13-gaussian), [Orca](#14-orca), [NWChem](#15-nwchem), and [pySCF](#16-pyscf). We are working on adding compatiblity with [Quantum Espresso](#12-quantum-espresso).
 
----
 
 ## 1.1 VASP
 
@@ -91,13 +88,11 @@ low_spin  = read.vasp( "path/to/the/low/spin/state/directory" )
 high_spin = read.vasp( "path/to/the/high/spin/state/directory" )
 ```
 
----
 
 ## 1.2 Quantum Espresso
 
 We currently are working on making pySCO compatible with Quantum Espresso files.
 
----
 
 ## 1.3 Gaussian
 
@@ -112,7 +107,6 @@ high_spin = read.gaussian( "path/to/the/high/spin/state/gaussian/output.log" )
 
 Remember that you need to do this for each spin state. The file extension is irrelevant for as long as you include the complete file name.
 
----
 
 ## 1.4 Orca
 
@@ -129,7 +123,6 @@ Remember that you need to do this for each spin state. The file extension is irr
 
 **Advise to the user**: Orca sometimes truncates the number of molecular orbitals written in the output, which is not helpful in our case, therefore we recommend including `! PrintMOs` in your input to ensure that all orbitals are printed.
 
----
 
 ## 1.5 NWChem
 
@@ -144,7 +137,6 @@ high_spin = read.nwchem( "path/to/the/high/spin/state/nwchem/output.out" )
 
 Remember that you need to do this for each spin state. The file extension is irrelevant for as long as you include the complete file name.
 
----
 
 ## 1.6 pySCF
 Since pySCF already runs in Python, we simply need to provide the mean-field object we created for our run, and the harmonic analysis dictionary that we obtained from the hessian matrix. For the sake of clarity, please keep in mind that the mean-field object commonly is called `mf` in the pySCF documentation, whereas the harmonic analysis is available through the `thermo` module using,
@@ -164,7 +156,6 @@ low_spin  = read.pyscf( low_spin_mean_field_object, low_spin_harmonic_analysis )
 high_spin = read.pyscf( high_spin_mean_field_object, high_spin_harmonic_analysis )
 ```
 
----
 
 ## 1.7 Passing Additional Options
 The [read](#1-reading-outputs-from-electronic-structure-codes) module also allows for the inclusion of additional options when reading output files. These are specified as keyword arguments, namely, [magnetization](#171-magnetization-per-atom), [jahnteller](#172-jahn-teller-distortion), and [orbit](#173-spin-orbit-coupling). These keywords are not mutually exclusive and hence may be included simultaneously.
@@ -217,12 +208,10 @@ from pysco import read
 low_spin  = read.nwchem( "path/to/the/low/spin/state/nwchem/output.out",  orbit=1 )
 high_spin = read.nwchem( "path/to/the/high/spin/state/nwchem/output.out", orbit=3 )
 ```
----
+
 ---
 
 # 2. Computing Properties
-
----
 
 ## 2.1 Spin-Crossover Energy
 
@@ -253,8 +242,6 @@ Esco = thermo.spin_crossover_energy( ls=low_spin, hs=high_spin, centers=2.0 )
 # Multiple choices
 Esco = thermo.spin_crossover_energy( ls=low_spin, hs=high_spin, zero_point_energy=True )
 ```
-
----
 
 ## 2.2 Transition Temperature
 
@@ -289,8 +276,6 @@ Thalf = thermo.transition_temperature( ls=low_spin, hs=high_spin, guess=120.0 )
 Thalf, dH, dS = thermo.transition_temperature( ls=low_spin, hs=high_spin, centers=2.0, guess=120.0, dH_and_dS=True)
 ```
 
----
-
 ## 2.3 High-Spin Population as Function of Temperature
 
 Returns a NumPy array where the first column is the temperature, $T$, in Kelvin and the second column is the high-spin population, $`n_\mathrm{HS}`$.
@@ -315,7 +300,6 @@ T_and_nHS = thermo.high_spin_population( ls=low_spin, hs=high_spin, points=[100,
 # Fix the phenomenological interaction parameter, in kJ/mol
 T_and_nHS = thermo.high_spin_population( ls=low_spin, hs=high_spin, interaction=2.5 )
 ```
----
 
 ## 2.4 Gibbs Free Energy as Function of Temperature
 
@@ -345,7 +329,6 @@ nHS_and_G = thermo.gibbs_free_energy( ls=low_spin, hs=high_spin, temperature=120
 # Multiple choices
 nHS_and_G = thermo.gibbs_free_energy( ls=low_spin, hs=high_spin, temperature=120.0, points=128, interaction=2.5 )
 ```
----
 
 ## 2.5 Fitting the Interaction Parameter
 
