@@ -1,3 +1,9 @@
+# Upcoming new release in January 2026!
+
+We are happy to announce a major update to pySCO. The new release will be including significant changes across the entire library to make it simpler, more efficient and robust.
+
+---
+
 <p align="center">
    <img src="https://github.com/amalbavera/pysco/blob/main/docs/pysco_logo.png" alt="pySCO logo" align="center" width="350px"/>
 </p>
