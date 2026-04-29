@@ -262,7 +262,7 @@ high_spin.set_orbit( 2*[3] + 98*[0] )
 
 ## 1.5 Custom Spin State
 
-The library offers the possibility to define a spin state independent of an ouput files, or files, from electronic structure calculations. This is handy for toy problems or for more in-depth analyses. The following list gathers all the necessary attributes for such purpose.
+The library offers the possibility to define a spin state independent of an ouput file, or files, from electronic structure calculations. This is handy for toy problems or for more in-depth analyses. The following list gathers all the necessary attributes for such purpose.
 
 - `elements:list[str]`. No units. All the elements for the species at hand. It is possible to use a short-hand notation to group the elements, e. g., `['Mn'] + ['C'] + ['H']`.
 
