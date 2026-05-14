@@ -439,16 +439,16 @@ where $`{\Delta E}_\mathrm{HL} = {E}_\mathrm{HS} - {E}_\mathrm{LS}`$ is the tota
 
 There is one optional argument that modifies the behavior of the function:
 
-- `zero_point_energy:bool = True`. If set to `False`, the zero-point energy correction will not be included, as in $`{\Delta E}_\mathrm{HL}`$. Otherwise the energy difference $`{\Delta E}_\mathrm{sco}`$ will be reported.
+- `zero_point_energy:bool = False`. If set to `True`, the zero-point energy correction will be included, as in $`{\Delta E}_\mathrm{sco}`$. Otherwise the energy difference $`{\Delta E}_\mathrm{HL}`$ will be reported.
 
 ```python
 import pysco
 
 # Default
-Esco  = model.spin_crossover_energy( )
+Ehl  = model.spin_crossover_energy( )
 
-# Ignore the zero-point energy correction
-Ehl   = model.spin_crossover_energy( zero_point_energy=False )
+# Include the zero-point energy correction
+Esco = model.spin_crossover_energy( zero_point_energy=True )
 
 ```
 
@@ -678,16 +678,16 @@ where $`{\Delta E}_\mathrm{HL} = {E}_\mathrm{HS} - {E}_\mathrm{LS}`$ is the tota
 
 There is one optional argument that modifies the behavior of the function:
 
-- `zero_point_energy:bool = True`. If set to `False`, the zero-point energy correction will not be included, as in $`{\Delta E}_\mathrm{HL}`$. Otherwise the energy difference $`{\Delta E}_\mathrm{sco}`$ will be reported.
+- `zero_point_energy:bool = False`. If set to `True`, the zero-point energy correction will be included, as in $`{\Delta E}_\mathrm{sco}`$. Otherwise the energy difference $`{\Delta E}_\mathrm{HL}`$ will be reported.
 
 ```python
 import pysco
 
 # Default
-Esco  = model.spin_crossover_energy( )
+Ehl  = model.spin_crossover_energy( )
 
-# Ignore the zero-point energy correction
-Ehl   = model.spin_crossover_energy( zero_point_energy=False )
+# Include the zero-point energy correction
+Esco = model.spin_crossover_energy( zero_point_energy=True )
 
 ```
 
